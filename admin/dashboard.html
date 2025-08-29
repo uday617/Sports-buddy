@@ -1,0 +1,35 @@
+<div class="admin-dashboard">
+  <h2 class="dashboard-heading">✨ Admin Dashboard</h2>
+
+  <div class="admin-buttons">
+    <button id="addEventBtn">➕ Add Event</button>
+    <button id="manageSportsBtn">⚽ Manage Sports</button>
+    <button id="manageLocationsBtn">🌆 Manage Cities/Areas</button>
+  </div>
+
+  <div id="eventSection" class="admin-section glass-form">
+    <h3>📅 Add New Event</h3>
+    <input type="text" id="eventName" placeholder="Event Name" />
+    <input type="text" id="eventCategory" placeholder="Category (e.g., Football)" />
+    <input type="text" id="eventCity" placeholder="City" />
+    <input type="text" id="eventArea" placeholder="Area" />
+    <input type="datetime-local" id="eventTime" />
+    <button id="submitEvent"> Submit Event</button>
+    <p id="eventStatus" class="status"></p>
+  </div>
+
+  <div id="sportsSection" class="admin-section glass-form hidden">
+    <h3>⚽ Manage Sports</h3>
+    <input type="text" id="newSport" placeholder="Add New Sport" />
+    <button id="addSportBtn">Add Sport</button>
+    <ul id="sportsList"></ul>
+  </div>
+
+  <div id="citiesSection" class="admin-section glass-form hidden">
+    <h3>🌆 Manage Cities/Areas</h3>
+    <input type="text" id="newCity" placeholder="City Name" />
+    <input type="text" id="newArea" placeholder="Area Name" />
+    <button id="addCityBtn">Add City/Area</button>
+    <ul id="citiesList"></ul>
+  </div>
+</div>

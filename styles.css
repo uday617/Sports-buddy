@@ -1,0 +1,756 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: #f9f9f9;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  flex-wrap: wrap;
+  backdrop-filter: blur(8px);
+}
+.nav-left h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-family: 'Orbitron', sans-serif;
+  color: #00e0ff;
+  letter-spacing: 1.5px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.auth-buttons {
+  margin-left: 10px;
+  padding: 6px 12px;
+  background: #3498db;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.fade-in {
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.profile-wrapper {
+  position: relative;
+}
+
+#menuToggle {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.profile-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  padding: 20px 15px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  min-width: 240px;
+  z-index: 99;
+}
+
+.profile-menu img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto 8px;
+}
+
+.profile-info {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.name-text {
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0;
+  color: white;
+}
+
+.email-text {
+  font-size: 0.85rem;
+  color: #e2e2e2;
+  margin: 0;
+  word-break: break-word;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-menu button {
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+/* ✅ Edit Preferences Button */
+#changePreferencesBtn {
+  margin-top: 12px;
+  background-color: #4caf50;
+  color: white;
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease-in-out;
+}
+
+#changePreferencesBtn:hover {
+  background-color: #43a047;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(76, 175, 80, 0.25);
+}
+
+/* ✅ Logout Button */
+#logoutBtn {
+  margin-top: 10px;
+  padding: 9px 15px;
+  background-color: #e53935;
+  color: white;
+  font-size: 14px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+#logoutBtn:hover {
+  background-color: #d32f2f;
+}
+
+.hidden {
+  display: none;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+.auth-card {
+  max-width: 400px;
+  width: 90%;
+  margin: 100px auto 0 auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(15px);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  color: white;
+}
+.auth-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.auth-card input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+.auth-card button {
+  width: 100%;
+  padding: 12px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+.auth-card button:hover {
+  background-color: #2980b9;
+}
+.auth-card .error {
+  color: #ff8080;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  text-align: center;
+}
+#backgroundVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -100;
+  pointer-events: none;
+}
+main {
+  padding-top: 80px;
+}
+.admin-dashboard {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.dashboard-heading {
+  text-align: center;
+  font-size: 2rem;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 25px;
+}
+
+.admin-buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  gap: 10px;
+}
+
+.admin-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: linear-gradient(to right, #ff5f6d, #ffc371);
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.admin-buttons button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(to right, #43cea2, #185a9d);
+}
+
+.glass-form {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 40px;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+}
+
+.glass-form h3 {
+  margin-bottom: 20px;
+  font-size: 1.3rem;
+}
+
+.glass-form input {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.glass-form button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.status {
+  margin-top: 10px;
+  font-style: italic;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.event-list-section h3 {
+  margin-bottom: 10px;
+  font-size: 1.3rem;
+}
+
+.event-list {
+  list-style: none;
+  padding: 0;
+}
+
+.event-list li {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  color: white;
+  position: relative;
+}
+
+.event-list button {
+  margin-left: 10px;
+  background-color: #e74c3c;
+  border: none;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.event-list button.editEvent {
+  background-color: #f39c12;
+}
+.glass-events {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.events-heading {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 20px;
+  background: linear-gradient(to right, #ff9a9e, #fad0c4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.filter-bar {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.filter-bar select {
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.events-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.event-card {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 20px;
+  border-radius: 14px;
+  color: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.event-card h3 {
+  margin-top: 0;
+  color: #f1c40f;
+}
+
+.event-card p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+ /* for tagline */
+ .tagline {
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+  margin-top: 140px;
+  margin-bottom: 40px;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 8px rgba(0, 0, 0, 0.4);
+  animation: fadeInSoft 1s ease;
+  backdrop-filter: blur(4px);
+}
+
+@keyframes fadeInSoft {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+ 
+.event-card button {
+  margin-top: 6px;
+  padding: 6px 12px;
+  background-color: #00796b; /* Teal Green */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+.event-card button:hover {
+  background-color: #004d40; /* Darker teal on hover */
+}
+
+/* Preference Container Style */
+/* Headings */
+#preferencesForm h2 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+/* Checkbox + Radio */
+#preferencesForm label {
+  display: block;
+  margin: 8px 0;
+  font-size: 16px;
+}
+/* Animation Keyframes */
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Extra: Form visibility transition */
+#user-section {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+/* 🎯 Preferences Form Styling */
+#preferencesForm {
+  animation: fadeInUp 0.8s ease-out;
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 30px;
+  color: white;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  margin: auto;
+  font-size: 1.2rem;
+}
+
+/* ✨ Entry Animation */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 🔵 Save Preferences Button */
+#preferencesForm button {
+  background-color: #00eaff;
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px #00eaff88;
+  margin-top: 20px;
+}
+
+#preferencesForm button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00eaffcc;
+  background-color: #00cce0;
+}
+.skip-btn {
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid #fff;
+  padding: 10px 20px;
+  margin-left: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.skip-btn:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+#name-section {
+  width: 95%;
+  max-width: 500px;
+  padding: 2.5rem;
+  border-radius: 1.5rem;
+  background: rgba(222, 219, 219, 0.5); /* darker glass for visibility */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: 0 12px 32px rgb(56, 54, 54);
+  text-align: center;
+  animation: fadeSlide 0.6s ease forwards;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* Heading inside card */
+#name-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #111;
+}
+
+/* Form Layout */
+#nameForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Input Style */
+#nameForm input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  outline: none;
+}
+
+/* Focus Effect */
+#nameForm input:focus {
+  border-color: #007bff;
+}
+
+/* Button Style */
+#nameForm button {
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#nameForm button:hover {
+  background-color: #0056b3;
+}
+
+/* Entry Animation */
+@keyframes fadeSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🌌 Background */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom right, #e0f7fa, #fce4ec);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 📦 Chat Container */
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* 🔙 Back Button */
+#backBtn {
+  margin: 12px 16px;
+  padding: 6px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  background-color: #00796b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.3s ease;
+}
+#backBtn:hover {
+  background-color: #004d40;
+}
+
+/* 🧊 Chat Box */
+#chatBox {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 12px;
+  margin: 10px;
+  animation: fadeIn 0.5s ease-in;
+}
+
+/* 💬 Message Bubbles */
+.chat-message {
+  max-width: 60%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  position: relative;
+  animation: slideIn 0.3s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  word-wrap: break-word;
+}
+.chat-left {
+  align-self: flex-start;
+  background-color: #d0efff;
+}
+.chat-right {
+  align-self: flex-end;
+  background-color: #d3f9d8;
+}
+.timestamp {
+  display: block;
+  font-size: 11px;
+  color: #555;
+  margin-top: 4px;
+  text-align: right;
+}
+
+/* 📩 Input Box */
+.input-container {
+  display: flex;
+  padding: 10px;
+  background-color: white;
+  box-shadow: 0 -2px 8px rgba(0,0,0,0.1);
+}
+#messageInput {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #009688;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+}
+#sendBtn {
+  background-color: #009688;
+  color: white;
+  border: none;
+  padding: 0 18px;
+  margin-left: 10px;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#sendBtn:hover {
+  background-color: #00796b;
+}
+
+/* ✨ Animations */
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+

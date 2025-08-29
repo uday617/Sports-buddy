@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sports Buddy</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+  <!-- Background video -->
+  <video autoplay muted loop id="backgroundVideo">
+    <source src="background.mp4" type="video/mp4" />
+  </video>
+
+  <div class="overlay"></div>
+
+  <nav class="navbar">
+    <div class="nav-left">
+      <h1>Sports Buddy</h1>
+    </div>
+    <div class="nav-right">
+      <div id="nav-auth-buttons">
+        <button id="loginBtn" class="auth-buttons">Login</button>
+        <button id="registerBtn" class="auth-buttons">Register</button>
+      </div>
+      <div id="nav-profile" class="profile-wrapper" style="display: none;">
+        <button id="menuToggle">☰</button>
+        <div id="profileMenu" class="profile-menu hidden">
+          <img id="nav-profile-pic" class="profile-pic" />
+          <div class="profile-info">
+            <p id="nav-user-name" class="name-text"></p>
+            <p id="nav-user-email" class="email-text"></p>
+          </div>
+          <button id="changePreferencesBtn">⚙️ Edit Preferences</button>
+          <button id="logoutBtn">Logout</button>
+        </div>
+
+      </div>
+    </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="hero-tagline">
+      <h2 id="tagline" class="tagline">Find Your Game, Meet Your Match.</h2>
+    </div>
+    <section id="auth-section"></section>
+    <section id="user-section"></section>
+   <section id="events-section" class="glass-events" style="display: none;">
+  <h2 class="events-heading">🎯Nearby Sports Events</h2>
+  <div id="filters" class="filter-bar">
+    <select id="cityFilter"></select>
+    <select id="areaFilter"></select>
+    <select id="categoryFilter"></select>
+  </div>
+  <div id="eventsContainer" class="events-container"></div>
+</section>
+
+  </main>
+
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script src="firebase/firebase-config.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Event Chat</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="chat-wrapper">
+    <button id="backBtn" onclick="goBack()">← Back</button>
+    <h2 id="eventTitle">Loading...</h2>
+    <div id="chatBox"></div>
+    <div class="input-container">
+      <input type="text" id="messageInput" placeholder="Type your message" />
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+  <script src="firebase/firebase-config.js"></script>
+
+ <script>
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+  const params = new URLSearchParams(window.location.search);
+  const eventId = params.get("eventId");
+
+  const chatBox = document.getElementById("chatBox");
+  const sendBtn = document.getElementById("sendBtn");
+  const messageInput = document.getElementById("messageInput");
+  const eventTitle = document.getElementById("eventTitle");
+
+  // ✅ Timestamp formatter 
+  function formatTimestamp(dateObj) {
+    const date = new Date(dateObj);
+    const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const msgDate = new Date(date);
+    msgDate.setHours(0, 0, 0, 0);
+
+    const diff = today.getTime() - msgDate.getTime();
+
+    let dayLabel;
+    if (diff === 0) {
+      dayLabel = "Today";
+    } else if (diff === 86400000) {
+      dayLabel = "Yesterday";
+    } else {
+      dayLabel = date.toLocaleDateString(undefined, {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+      }); 
+    }
+
+    return `${time} • ${dayLabel}`;
+  }
+
+  auth.onAuthStateChanged(async user => {
+    if (!user) return alert("Please login to access chat");
+
+    const eventDoc = await db.collection("events").doc(eventId).get();
+    const eventData = eventDoc.data();
+    eventTitle.textContent = "Chat: " + eventData.name;
+
+    const joined = eventData.joinedUsers || [];
+    if (!joined.includes(user.uid)) {
+      chatBox.innerHTML = "<p>You have not joined this event. Join to access chat.</p>";
+      messageInput.style.display = "none";
+      sendBtn.style.display = "none";
+      return;
+    }
+
+    db.collection("events").doc(eventId).collection("chats")
+      .orderBy("createdAt")
+      .onSnapshot(snapshot => {
+        chatBox.innerHTML = "";
+        snapshot.forEach(doc => {
+          const chat = doc.data();
+          const msgDiv = document.createElement("div");
+          msgDiv.classList.add("chat-message");
+          msgDiv.classList.add(chat.senderId === user.uid ? "chat-right" : "chat-left");
+
+          const time = formatTimestamp(chat.createdAt?.toDate?.());
+          msgDiv.innerHTML = `
+            <strong>${chat.senderName}:</strong> ${chat.message}
+            <span class="timestamp">${time}</span>
+          `;
+          chatBox.appendChild(msgDiv);
+        });
+        chatBox.scrollTop = chatBox.scrollHeight;
+      });
+
+    sendBtn.onclick = async () => {
+      const text = messageInput.value.trim();
+      if (!text) return;
+      const userDoc = await db.collection("users").doc(user.uid).get();
+      const name = userDoc.data()?.fullName || user.email;
+      await db.collection("events").doc(eventId).collection("chats").add({
+        senderId: user.uid,
+        senderName: name,
+        message: text,
+        createdAt: new Date()
+      });
+      messageInput.value = "";
+    };
+
+
+    messageInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        sendBtn.click();
+      }
+    });
+  });
+
+  function goBack() {
+    window.history.back();
+  }
+</script>
+
+
+</body>
+
+</html>
